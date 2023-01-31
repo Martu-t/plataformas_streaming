@@ -1,0 +1,17 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+
+#ignore .env for database
+.env
+.env.example
+.env.local
+.env.staging
+
+#ingnore any csv
+*.csv
+
+#ingnore any xls
+*.xlsx
+*.xls
