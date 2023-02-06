@@ -1,12 +1,16 @@
-# Challenge Rocking Data
+# Modelado de datos de streaming
 ## Data Engineering
-<img src="https://i.ytimg.com/vi/WnZHz7_lfIo/maxresdefault.jpg"  height=50% width=50%> 
+<img src="https://ruidoenlared.com/wp-content/uploads/2022/08/plataformas-streaming-en-mexico.jpg"  height=50% width=50%> 
 
 
 ##  Propuesta de trabajo
-Bienvenido/a! Este repositorio fue realizado en base al challenge propuesto por Rocking Data para evaluar conocimientos de Data Engineer.
-El mismo consta de 4 partes y se intentó resolver de la mejor manera posible en el tiempo acordado.
+Bienvenido/a!
+
+Este repositorio fue realizado en base un challenge propuesto para evaluar conocimientos en Data Engineer.
+
+El mismo consta de 4 partes y se intentó resolver de la mejor manera posible en 3 días.
 La idea general es descargar archivos de un bucket de s3 en formato .csv para trabajarlo. Luego explorarlos, analizarlos y en caso de encontrar problemas, proponer soluciones. Entendiendo la problematica, se debe armar un modelado de datos. Una vez planteado el modelo, se deben cargar las tablas en el gestor de base de datos a elección (en mi caso MySQL). 
+
 ¿Me acompañas a ver cómo lo resolví?
 
 ## Herramientas utilizadas:
@@ -18,7 +22,7 @@ La idea general es descargar archivos de un bucket de s3 en formato .csv para tr
 
 ## Pre-requisitos para correr todo correctamente
 
-- Se debe tener instalado python y las librerías que se importan en los archivos.
+- Se debe tener instalado Python y las librerías que se importan en los archivos.
 - Jupyter Notebook instalado (puede ser extensión del VSC)
 - Si se desea utilizar otro gestor de base de datos diferente a MySQL, se debe adaptar las conexiones, según indique la documentación de SQLAlchemy. 
 - Se intenta utilizar siempre rutas relativas para evitar cualquier problema, pero en caso de existir problemas en las rutas, cambiarlas a las correspondientes de su equipo.
@@ -35,22 +39,30 @@ ACCESSKEY = 'acces_key_bucket'
 SECRETKEY='secret_key_bucket'
 ```
 
+## Flujo del dato
+
+A continuación se muestra el flujo de ciclo de vida del dato.
+
+<img src="https://iili.io/H1p9una.png"> 
+
+
 ## Estructura del repositorio
 
 ### 1.Programática
 
-Contiene sólo un archivo que sirve para descargar los datos de un bucket de Amazon (S3). Se puede poner las rutas y nombres que se deseen de forma flexible en los parámetros de la función.
+Aquí se encuentra un archivo .py que contiene sólo una función para descargar los datos de un bucket de Amazon (S3). Se puede poner las rutas y nombres que se deseen de forma flexible en los parámetros de la función.
 Para acceder corretamente, se debe contar con credenciales.
 
 ### 2.QA
 
 Dentro de esta carpeta de encuentra el archivo qa_eda.ipnyb, donde se hace un análisis descriptivo y control de datos con Python.
-Además de explican los hayasgos y posibles problemas con posibles soluciones.
+Además se explican los hayasgos y posibles problemas con soluciones sugeridas. También es donde se hacen ciertas transformaciones del dataset original para llegar al modelo de datos deseado.
 Se recomienda ejecutar una por una las celdas y leer los comentarios.
 
 ### 3.Modelado 
 
 Contiene una carpeta "tablas" con todos los DataFrames del punto anterior, convertidos a .csv. 
+Por cuestiones de tamaño serán ignorados en GitHub, pero al ejecurase el .ipynb del paso anterior se irán creando de manera local.
 Además hay dos archivos, que se deben ejecutar en el siguiente orden:
 
 1_modelado_modelo_ddl.py : Aquí se encuentran declaradas las clases, según la documentación de SQLAlchemy para crear modelos. Se recomienda ajustar los datos en este punto si se trabaja con otro gestor de base de datos para evitar problemas.
@@ -83,16 +95,14 @@ Además podrá ver el Diagrama de Entidad Relación propuesto.
 
 Hay un archivo llamado funciones.py con todas las funciones utlizadas para hacer transformaciones. Este archivo no hace nada al ejecutarse ya que nunca se laman a dichas funciones, pero sirve para tener una vista rápida de algunas transformaciones realizadas a lo largo del proceso.
 
-## ¿Dudas? ¿Problemas?
+## ¿Dudas? ¿Problemas? - Feedback
 
 Espero que todo pueda correr sin problemas. Pero sabemos que siempre hay lugar para el error así que ante cualquier cosa no dudes en escribirme:
 
 Mail: ma.tarantino@hotmail.com
 Linkedin: https://www.linkedin.com/in/martha-alejandra-tarantino/
 
-## Feedback
-
-Gracias por tomare el tiempo en evaluar mi resolución. Sus comentarios e ideas son muy útiles para poder seguir mejorando. 
+También te invito a contarme que te pareció la resolución y cómo lo hubieras hecho vos. Ya que aún estoy aprendiendo me sirve MUCHO todas tus ideas para mejorar 
 
 ## Otros Proyectos
 
