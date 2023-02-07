@@ -110,6 +110,7 @@ Además podrá ver el Diagrama de Entidad Relación propuesto. Estos son sólo a
 
 El DER que se pensó para armar este sistema es el siguiente:
 
+<img src="https://i.postimg.cc/NG2vSzPp/sql-DER.png"> 
 
 
 ## ¿Dudas? ¿Problemas? - Feedback
