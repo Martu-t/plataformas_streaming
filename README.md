@@ -22,6 +22,7 @@ La idea general es descargar archivos de un bucket de s3 en formato .csv para tr
 
 ## Pre-requisitos para correr todo correctamente
 
+- Datasets principales: Yo descargué 2 datasets sobre plataformas de streaming alojados en un bucket, pero los mismos pueden encontrarse también en la página de [Kaggle](https://www.kaggle.com/) junto con algunos de otras plataformas. Los que se utilizan en este repositorio son los de: [Netflix](https://www.kaggle.com/datasets/shivamb/netflix-shows) y [Disney](https://www.kaggle.com/shivamb/disney-movies-and-tv-shows). También se pueden complementar con los datasets de: [Amazon Prime video](https://www.kaggle.com/shivamb/amazon-prime-movies-and-tv-shows) y [Hulu](https://www.kaggle.com/datasets/shivamb/hulu-movies-and-tv-shows).
 - Se debe tener instalado Python y las librerías que se importan en los archivos.
 - Jupyter Notebook instalado (puede ser extensión del VSC)
 - Si se desea utilizar otro gestor de base de datos diferente a MySQL, se debe adaptar las conexiones, según indique la documentación de SQLAlchemy. 
@@ -29,19 +30,21 @@ La idea general es descargar archivos de un bucket de s3 en formato .csv para tr
 - Las credenciales tanto del bucket, cómo de la base de datos se encuentran en un archivo .env que deberá crear. El mismo debe tener el siguiente formato:
 
 ```
+#credenciales BD
 DATABASE_USERNAME='usuario_raiz' 
 DATABASE_PASSWORD='contraseña'
 DATABASE_IP='localhost' o 'host_name_aws' 
 DATABASE_NAME='nombre de la bd'
 
-BUCKET_NAME = 'desafio-rkd'
+#credenciales bucket s3
+BUCKET_NAME = 'nombre_bucket_s3'
 ACCESSKEY = 'acces_key_bucket'
 SECRETKEY='secret_key_bucket'
 ```
 
 ## Flujo del dato
 
-A continuación se muestra el flujo de ciclo de vida del dato.
+A continuación se muestra gráficamente cómo se ha pensado el flujo del dato desde la extracción hasta su carga. 
 
 <img src="https://iili.io/H1p9una.png"> 
 
@@ -69,7 +72,21 @@ Además hay dos archivos, que se deben ejecutar en el siguiente orden:
     
 2_modelado_carga_tablas: Permite poblar las tablas previamentes creadas.
 
-En caso de no poder hacer la carga correctamente se puede optar por utilizar una versión simplificada. Tener en cuenta que de esta manera se deberás asignar las PK, FK e índices después de crearlas. También se crean con tipo de dato por defecto.
+
+#### ¿Qué pasa si no puedo crear las tablas o cargar los datos?
+
+En caso de tener problemas con la creación de tablas usando clases, se proponen dos alternativas.
+La primera es utilizar el archivo "create_table_peliculas.sql" (sólo en MySQL) para crear todas las tablas vacias. De esta manera se puede evitar ejecutar el paso 1. También se puede optar por poblar las tablas cargargando los archivos .csv creados en el punto anterior. Tener en cuenta que se deben tener los permisos activados para poder acceder a dicho archivo desde el gestor de base de datos.
+
+Para ello se debe agregar la siguiente sentencia en el mencionado archivo "create_table_peliculas.sql"
+
+```
+LOAD DATA INFILE 'ruta_absoluta/nombre_archivo.csv'
+INTO TABLE `nombre_tabla` 
+FIELDS TERMINATED BY ',' ENCLOSED BY '' ESCAPED BY '' 
+LINES TERMINATED BY '\n' IGNORE 1 LINES;
+```
+La segunda opción (si por ejemplo se está utilizando otro gestor de base de datos) sería optar por utilizar una versión simplificada con SQLAlchemy. Tener en cuenta que de esta manera se deberás asignar las PK, FK e índices después de crearlas. También se crean con tipo de dato por defecto.
 
 ```
 # Ejemplo de sintaxis cómo sería enviando directamente la tabla a tráves de sqlalchemy
@@ -89,11 +106,11 @@ Para detalles del funcionamiento, se recomienda ir a la documentación de Pandas
 ### 4.SQL
 
 En esta carpeta encontrá algunas consultas (.sql) y un procedimiento, los cuales van acompañados de imagenes de cómo deberían verse.
-Además podrá ver el Diagrama de Entidad Relación propuesto.
+Además podrá ver el Diagrama de Entidad Relación propuesto. Estos son sólo algunos ejemplos propuestos para ver que la base de datos funcione correctamete. Se alienta a crear otras queries o inclusos nuevas tablas temporales.
 
-#### funciones.py
+El DER que se pensó para armar este sistema es el siguiente:
 
-Hay un archivo llamado funciones.py con todas las funciones utlizadas para hacer transformaciones. Este archivo no hace nada al ejecutarse ya que nunca se laman a dichas funciones, pero sirve para tener una vista rápida de algunas transformaciones realizadas a lo largo del proceso.
+
 
 ## ¿Dudas? ¿Problemas? - Feedback
 
