@@ -3,6 +3,7 @@
 
 
 #importar sqlalquemy para conectar a la base de datos y pymysql para usar sentencias sql
+from platform import platform
 import sqlalchemy as db
 import pymysql
 import pandas as pd
@@ -30,6 +31,7 @@ class Show(Base):
     __tablename__ = 'shows'
     id_show = Column(String(40), primary_key=True)
     id_type = Column(Integer, ForeignKey('show_type.id_type'))
+    id_platform = Column(Integer, ForeignKey('platform.id_platform'))
     id_rating = Column(Integer, ForeignKey('rating.id_rating'))
     title = Column(String(500))
     duration_num = Column(Integer)
@@ -37,10 +39,9 @@ class Show(Base):
     date_added = Column(Date)
     release_year = Column(Integer)
     description = Column(String(1000))
-    platform = Column(String(100))
 
     def __repr__(self):
-        return f"Show(id_show={self.id_show}, id_type={self.id_type}, id_rating={self.id_rating}, title='{self.title}', duration_num={self.duration_num}, duration_unit='{self.duration_unit}', date_added={self.date_added}, release_year={self.release_year}, rating={self.rating}, description='{self.description}, platform='{self.platform}')"
+        return f"Show(id_show={self.id_show}, id_type={self.id_type}, , id_platform='{self.id_platform}' id_rating={self.id_rating}, title='{self.title}', duration_num={self.duration_num}, duration_unit='{self.duration_unit}', date_added={self.date_added}, release_year={self.release_year}, rating={self.rating}, description='{self.description})"
 
 
 class Show_type(Base):
@@ -50,6 +51,14 @@ class Show_type(Base):
     
     def __repr__(self):
         return f"<ShowType(id='{self.id_type}', type='{self.type}')>" 
+
+class Platform(Base):
+    __tablename__ = 'platform'
+    id_platform = Column(Integer, primary_key=True)
+    platform = Column(String(100))
+    
+    def __repr__(self):
+        return f"<Platform(id='{self.id_platform}', type='{self.platform}')>" 
 
 class Rating(Base):
     __tablename__ = 'rating'
@@ -139,6 +148,11 @@ def create_tables():
         print('Las tablas se han creado con éxito')
     except Exception as e:
         print(f'Ha ocurrido un problema: {e}')
+    finally:
+        engine.dispose()
+        print(f'La conexión se ha cerrado')
+
+        
 
 #Crear todas tablas con create_all
 create_tables()

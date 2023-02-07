@@ -15,3 +15,6 @@
 #ingnore any xls
 *.xlsx
 *.xls
+
+## ingnore funciones.py as still developing (not to show)
+funciones.py
