@@ -51,12 +51,12 @@ A continuación se muestra gráficamente cómo se ha pensado el flujo del dato d
 
 ## Estructura del repositorio
 
-### 1.Programática
+### 1.Descarga
 
 Aquí se encuentra un archivo .py que contiene sólo una función para descargar los datos de un bucket de Amazon (S3). Se puede poner las rutas y nombres que se deseen de forma flexible en los parámetros de la función.
 Para acceder corretamente, se debe contar con credenciales.
 
-### 2.QA
+### 2.EDA_ETL
 
 Dentro de esta carpeta de encuentra el archivo qa_eda.ipnyb, donde se hace un análisis descriptivo y control de datos con Python.
 Además se explican los hayasgos y posibles problemas con soluciones sugeridas. También es donde se hacen ciertas transformaciones del dataset original para llegar al modelo de datos deseado.
@@ -105,7 +105,7 @@ Para detalles del funcionamiento, se recomienda ir a la documentación de Pandas
 
 ### 4.SQL
 
-En esta carpeta encontrá algunas consultas (.sql) y un procedimiento, los cuales van acompañados de imagenes de cómo deberían verse.
+En esta carpeta encontrá algunas consultas de ejemplo (.sql) y un procedimiento, los cuales van acompañados de imagenes de cómo deberían verse.
 Además podrá ver el Diagrama de Entidad Relación propuesto. Estos son sólo algunos ejemplos propuestos para ver que la base de datos funcione correctamete. Se alienta a crear otras queries o inclusos nuevas tablas temporales.
 
 El DER que se pensó para armar este sistema es el siguiente:
